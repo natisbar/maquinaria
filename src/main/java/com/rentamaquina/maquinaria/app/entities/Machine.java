@@ -59,5 +59,5 @@ public class Machine implements Serializable {
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy="machine")
     @JsonIgnoreProperties({"machine","messages"})
     private List<Reservation> reservations;
-   
+    
 }
