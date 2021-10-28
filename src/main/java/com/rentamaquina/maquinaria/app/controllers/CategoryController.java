@@ -5,8 +5,8 @@
  */
 package com.rentamaquina.maquinaria.app.controllers;
 
-import com.rentamaquina.maquinaria.app.entities.Client;
-import com.rentamaquina.maquinaria.app.services.ClientService;
+import com.rentamaquina.maquinaria.app.entities.Category;
+import com.rentamaquina.maquinaria.app.services.CategoryService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,52 +23,51 @@ import org.springframework.web.bind.annotation.RestController;
  * @author jandr
  */
 @RestController
-@RequestMapping("Client")
-public class ClientController {
+@RequestMapping("Category")
+public class CategoryController {
     
     @Autowired
-    private ClientService service;
+    private CategoryService service;
     
     /**
      * GET
      * @return 
      */
     @GetMapping("/all")
-    public List<Client> getClients(){
+    public List<Category> getCategorys(){
         return service.getAll();
     }
     
     /**
      * POST
-     * @param client
+     * @param category
      * @return 
      */
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
-    public Client save(@RequestBody Client client){
-        return service.save(client);
+    public Category save(@RequestBody Category category){
+        return service.save(category);
     }
     
     /**
      * PUT
-     * @param client
+     * @param category
      * @return 
      */
     @PostMapping("/update")
     @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
-    public Client update(@RequestBody Client client){
-        return service.update(client);
+    public Category update(@RequestBody Category category){
+        return service.update(category);
     }
     
     /**
      * DELETE
-     * @param clientId
+     * @param categoryId
      * @return 
      */
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
-    public boolean delete(@PathVariable("id")int clientId){
-        return service.deleteClient(clientId);
+    public boolean delete(@PathVariable("id")int categoryId){
+        return service.deleteCategory(categoryId);
     }
 }
-

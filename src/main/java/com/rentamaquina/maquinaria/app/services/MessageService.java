@@ -8,6 +8,7 @@ package com.rentamaquina.maquinaria.app.services;
 import com.rentamaquina.maquinaria.app.entities.Message;
 import com.rentamaquina.maquinaria.app.repositories.MessageRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,51 +18,83 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MessageService {
-    
-    // Autowired para poderla implementar porque es un repositorio
+
     @Autowired
     private MessageRepository repository;
-    
+
     /**
-     * GET: Consultar todos los registros
-     * @return 
+     * GET
+     *
+     * @return
      */
-    public List<Message> getMessages(){
-        return repository.findAll();
+    public List<Message> getAll() {
+        return repository.getAll();
     }
-    
+
     /**
-     * POST Crear o registrar
-     * @param message
-     * @return 
+     * Buscar por ID
+     *
+     * @param messageId
+     * @return
      */
-    public Message saveMessage(Message message){
-        Message existingMessage = repository.findById(message.getId()).orElse(null);
-        if(existingMessage==null){
-           repository.save(message);
+    public Optional<Message> getMessage(int messageId) {
+        return repository.getMessage(messageId);
+    }
+
+    /**
+     * POST
+     *
+     * @param message
+     * @return
+     */
+    public Message save(Message message) {
+        if (message.getIdMessage() == null) {
+            return repository.save(message);
+        } else {
+            Optional<Message> resultado = repository.getMessage(message.getIdMessage());
+            if (resultado.isPresent()) {
+                return message;
+            } else {
+                return repository.save(message);
+            }
         }
-        return message;
     }
-    
+
     /**
-     * PUT Actualizar o editar
+     * UPDATE
+     *
      * @param message
-     * @return 
+     * @return
      */
-    public Message updateMessage(Message message){
-        Message existingMessage = repository.findById(message.getId()).orElse(null);
-        existingMessage.setMessagetext(message.getMessagetext());
-        return repository.save(existingMessage);
+    public Message update(Message message) {
+        if (message.getIdMessage() != null) {
+            Optional<Message> resultado = repository.getMessage(message.getIdMessage());
+            if (resultado.isPresent()) {
+                if (message.getMessageText()!= null) {
+                    resultado.get().setMessageText(message.getMessageText());
+                }                
+                repository.save(resultado.get());
+                return resultado.get();
+            } else {
+                return message;
+            }
+        } else {
+            return message;
+        }
     }
-    
+
     /**
-     * DELETE Eliminar registro
-     * @param id
-     * @return 
+     * DELETE
+     *
+     * @param messageId
+     * @return
      */
-    public String deleteMessage(Integer id){
-        repository.deleteById(id);
-        return "Mensaje eliminado "+id;
+    public boolean deleteMessage(int messageId) {
+        Boolean aBoolean = getMessage(messageId).map(message -> {
+            repository.delete(message);
+            return true;
+        }).orElse(false);
+        return aBoolean;
     }
-    
+
 }

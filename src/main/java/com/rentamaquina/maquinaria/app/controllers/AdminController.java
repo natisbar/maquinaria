@@ -5,8 +5,8 @@
  */
 package com.rentamaquina.maquinaria.app.controllers;
 
-import com.rentamaquina.maquinaria.app.entities.Client;
-import com.rentamaquina.maquinaria.app.services.ClientService;
+import com.rentamaquina.maquinaria.app.entities.Administration;
+import com.rentamaquina.maquinaria.app.services.AdminService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,52 +23,51 @@ import org.springframework.web.bind.annotation.RestController;
  * @author jandr
  */
 @RestController
-@RequestMapping("Client")
-public class ClientController {
+@RequestMapping("Admin")
+public class AdminController {
     
     @Autowired
-    private ClientService service;
+    private AdminService service;
     
     /**
      * GET
      * @return 
      */
     @GetMapping("/all")
-    public List<Client> getClients(){
+    public List<Administration> getAdmins(){
         return service.getAll();
     }
     
     /**
      * POST
-     * @param client
+     * @param admin
      * @return 
      */
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
-    public Client save(@RequestBody Client client){
-        return service.save(client);
+    public Administration save(@RequestBody Administration admin){
+        return service.save(admin);
     }
     
     /**
      * PUT
-     * @param client
+     * @param admin
      * @return 
      */
     @PostMapping("/update")
     @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
-    public Client update(@RequestBody Client client){
-        return service.update(client);
+    public Administration update(@RequestBody Administration admin){
+        return service.update(admin);
     }
     
     /**
      * DELETE
-     * @param clientId
+     * @param adminId
      * @return 
      */
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
-    public boolean delete(@PathVariable("id")int clientId){
-        return service.deleteClient(clientId);
+    public boolean delete(@PathVariable("id")int adminId){
+        return service.deleteAdmin(adminId);
     }
 }
-

@@ -5,8 +5,8 @@
  */
 package com.rentamaquina.maquinaria.app.controllers;
 
-import com.rentamaquina.maquinaria.app.entities.Client;
-import com.rentamaquina.maquinaria.app.services.ClientService;
+import com.rentamaquina.maquinaria.app.entities.Reservation;
+import com.rentamaquina.maquinaria.app.services.ReservationService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,52 +23,51 @@ import org.springframework.web.bind.annotation.RestController;
  * @author jandr
  */
 @RestController
-@RequestMapping("Client")
-public class ClientController {
+@RequestMapping("Reservation")
+public class ReservationController {
     
     @Autowired
-    private ClientService service;
+    private ReservationService service;
     
     /**
      * GET
      * @return 
      */
     @GetMapping("/all")
-    public List<Client> getClients(){
+    public List<Reservation> getReservations(){
         return service.getAll();
     }
     
     /**
      * POST
-     * @param client
+     * @param reservation
      * @return 
      */
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
-    public Client save(@RequestBody Client client){
-        return service.save(client);
+    public Reservation save(@RequestBody Reservation reservation){
+        return service.save(reservation);
     }
     
     /**
      * PUT
-     * @param client
+     * @param reservation
      * @return 
      */
     @PostMapping("/update")
     @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
-    public Client update(@RequestBody Client client){
-        return service.update(client);
+    public Reservation update(@RequestBody Reservation reservation){
+        return service.update(reservation);
     }
     
     /**
      * DELETE
-     * @param clientId
+     * @param reservationId
      * @return 
      */
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
-    public boolean delete(@PathVariable("id")int clientId){
-        return service.deleteClient(clientId);
+    public boolean delete(@PathVariable("id")int reservationId){
+        return service.deleteReservation(reservationId);
     }
 }
-

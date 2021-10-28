@@ -7,14 +7,16 @@ package com.rentamaquina.maquinaria.app.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.List;
+import java.sql.Date;
+import java.util.Calendar;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,29 +24,32 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author fdomoreno
+ * @author jandr
  */
 @Data  //trae getters y setters
 @AllArgsConstructor  //Constructor con todos los argumentos
 @NoArgsConstructor   //Constructor vacio
 @Entity
-@Table(name="client")
-public class Client implements Serializable {
-    
+@Table(name="Reservation")
+public class Reservation implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)  //genera automáticamente el ID
-    private Integer idClient;
-    @Column(name="email",nullable=false,length=50,unique=true)
-    private String email;
-    private String password;
-    @Column(length=50)  //50 numero máximo de caracteres para name
-    private String name;
-    private Integer age;
-    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy="client")
-    @JsonIgnoreProperties("client")
-    private List<Message> messages;
-    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy="client")
-    @JsonIgnoreProperties("client")
-    private List<Reservation> reservations;
+    private Integer idReservation;
+    private Date startDate;
+    private Calendar devolutionDate;
+    private String status="created";
+    
+    @ManyToOne
+    @JoinColumn(name = "machineId")
+    @JsonIgnoreProperties("reservations")
+    private Machine machine;
 
+    @ManyToOne
+    @JoinColumn(name = "clientId")
+    @JsonIgnoreProperties({"reservations","messages"})
+    private Client client;
+
+    @OneToOne(cascade = {CascadeType.REMOVE},mappedBy="reservation")
+    @JsonIgnoreProperties("reservation")
+    private Score score;
 }

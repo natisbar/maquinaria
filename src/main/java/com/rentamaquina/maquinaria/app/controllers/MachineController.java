@@ -9,15 +9,13 @@ import com.rentamaquina.maquinaria.app.entities.Machine;
 import com.rentamaquina.maquinaria.app.services.MachineService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -31,32 +29,45 @@ public class MachineController {
     @Autowired
     private MachineService service;
     
+    /**
+     * GET
+     * @return 
+     */
     @GetMapping("/all")
-    public List<Machine> findAllMachine(){
-        return service.getMachines();
+    public List<Machine> getMachines(){
+        return service.getAll();
     }
     
+    /**
+     * POST
+     * @param machine
+     * @return 
+     */
     @PostMapping("/save")
-    public ResponseEntity addMachine(@RequestBody Machine machine){
-        service.saveMachine(machine);
-        return ResponseEntity.status(201).build();
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
+    @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
+    public Machine save(@RequestBody Machine machine){
+        return service.save(machine);
     }
     
-    @PutMapping("/update")
-    public ResponseEntity updateMachine(@RequestBody Machine machine){
-        service.updateMachine(machine);
-        return ResponseEntity.status(201).build();
+    /**
+     * PUT
+     * @param machine
+     * @return 
+     */
+    @PostMapping("/update")
+    @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
+    public Machine update(@RequestBody Machine machine){
+        return service.update(machine);
     }
     
-//    @DeleteMapping("/delete")
-//    public String deleteMachine(@PathVariable("id") Integer id ){
-//        return service.deleteMachine(id);
-//    }
-    
-    @DeleteMapping("/delete")
-    public ResponseEntity deleteMachine(@RequestBody Machine machine ){
-        service.deleteMachine(machine.getId());
-        return ResponseEntity.status(204).build();
+    /**
+     * DELETE
+     * @param machineId
+     * @return 
+     */
+    @PostMapping("/delete")
+    @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
+    public boolean delete(@PathVariable("id")int machineId){
+        return service.deleteMachine(machineId);
     }
 }
