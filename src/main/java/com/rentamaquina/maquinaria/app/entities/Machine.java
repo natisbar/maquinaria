@@ -44,18 +44,15 @@ public class Machine implements Serializable {
     private String brand;
     private Integer year;
 //    @Column(name="category") //indica que en la tabla se llama así, y me permite cambiar el nombre en java
-    
     private String description;
     
     @ManyToOne
     @JoinColumn(name = "categoryId")
     @JsonIgnoreProperties("machines")
     private Category category;
-    
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy="machine")
     @JsonIgnoreProperties({"machine","client"})
-    private List<Message> Messages;
-    
+    private List<Message> messages;
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy="machine")
     @JsonIgnoreProperties({"machine","messages"})
     private List<Reservation> reservations;
