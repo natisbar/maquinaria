@@ -68,7 +68,7 @@ public class CategoryController {
      * @return 
      */
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
+    @ResponseStatus(HttpStatus.NO_CONTENT) //Anotacion que retorna el status
     public boolean delete(@PathVariable("id")int categoryId){
         return service.deleteCategory(categoryId);
     }

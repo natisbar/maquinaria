@@ -68,7 +68,7 @@ public class ClientController {
      * @return 
      */
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
+    @ResponseStatus(HttpStatus.NO_CONTENT) //Anotacion que retorna el status
     public boolean delete(@PathVariable("id")int clientId){
         return service.deleteClient(clientId);
     }
