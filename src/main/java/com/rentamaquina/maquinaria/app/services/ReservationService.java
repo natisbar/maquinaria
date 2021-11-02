@@ -7,10 +7,16 @@ package com.rentamaquina.maquinaria.app.services;
 
 import com.rentamaquina.maquinaria.app.entities.Reservation;
 import com.rentamaquina.maquinaria.app.repositories.ReservationRepository;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reports.CountClient;
+import reports.StatusReservation;
 
 /**
  *
@@ -102,5 +108,32 @@ public class ReservationService {
         }).orElse(false);
         return aBoolean;
     }
+    
+    public StatusReservation getReporteStatusReservaciones() {
+        List<Reservation> completed = repository.ReservationStatus("completed");
+        List<Reservation> cancelled = repository.ReservationStatus("cancelled");
+        return new StatusReservation(completed.size(), cancelled.size());
+    }
+    
+    public List<Reservation> getReportesTiempoReservaciones(String datoA, String datoB) {
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+        Date datoUno = new Date();
+        Date datoDos = new Date();
 
+        try {
+            datoUno = parser.parse(datoA);
+            datoDos = parser.parse(datoB);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (datoUno.before(datoDos)) {
+            return repository.ReservationTime(datoUno, datoDos);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+//    
+//    public List<CountClient> serviceTopClient() {
+//        return repository.getTopClient();
+//    }
 }

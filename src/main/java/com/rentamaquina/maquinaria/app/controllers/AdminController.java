@@ -67,7 +67,7 @@ public class AdminController {
      * @param adminId
      * @return 
      */
-    @PostMapping("/delete")
+    @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
     public boolean delete(@PathVariable("id")int adminId){
         return service.deleteAdmin(adminId);

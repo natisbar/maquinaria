@@ -67,7 +67,7 @@ public class ScoreController {
      * @param scoreId
      * @return 
      */
-    @PostMapping("/delete")
+    @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
     public boolean delete(@PathVariable("id")int scoreId){
         return service.deleteScore(scoreId);

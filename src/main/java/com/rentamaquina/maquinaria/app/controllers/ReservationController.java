@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import reports.CountClient;
+import reports.StatusReservation;
 
 /**
  *
@@ -67,9 +69,24 @@ public class ReservationController {
      * @param reservationId
      * @return 
      */
-    @PostMapping("/delete")
+    @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED) //Anotacion que retorna el status
     public boolean delete(@PathVariable("id")int reservationId){
         return service.deleteReservation(reservationId);
     }
+    
+    @GetMapping("/report-status")
+    public StatusReservation getReservas(){
+        return service.getReporteStatusReservaciones();
+    }
+    
+    @GetMapping("/report-dates/{dateOne}/{dateTwo}")
+    public List<Reservation> getReservasTiempo (@PathVariable("dateOne")String dateOne, @PathVariable("dateTwo")String dateTwo){
+        return service.getReportesTiempoReservaciones(dateOne, dateTwo);
+    }
+    
+//    @GetMapping("/report-clients")
+//    public List<CountClient> getClientes(){
+//        return service.serviceTopClient();
+//    }
 }
