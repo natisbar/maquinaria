@@ -133,7 +133,7 @@ public class ReservationService {
         }
     }
 //    
-//    public List<CountClient> serviceTopClient() {
-//        return repository.getTopClient();
-//    }
+    public List<CountClient> serviceTopClient() {
+        return repository.getTopClient();
+    }
 }

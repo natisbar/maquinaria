@@ -85,8 +85,8 @@ public class ReservationController {
         return service.getReportesTiempoReservaciones(dateOne, dateTwo);
     }
     
-//    @GetMapping("/report-clients")
-//    public List<CountClient> getClientes(){
-//        return service.serviceTopClient();
-//    }
+    @GetMapping("/report-clients")
+    public List<CountClient> getClientes(){
+        return service.serviceTopClient();
+    }
 }

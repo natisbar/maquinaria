@@ -21,7 +21,7 @@ public interface ReservationCrudRepository extends CrudRepository<Reservation, I
     
     public List<Reservation> findAllByStatus(String status);
     
-    // select clientId, count(*) as "total" from reservacion group by cliendId order by total desc;
-//    @Query ("SELECT c.client, COUNT(c.client) from Reservacion AS c group by c.client order by COUNT(c.client)DESC")
-//    public List<Object[]> countTotalReservationsByClient();
+//     select clientId, count(*) as "total" from reservacion group by cliendId order by total desc;
+    @Query ("SELECT c.client, COUNT(c.client) from Reservation AS c group by c.client order by COUNT(c.client)DESC")
+    public List<Object[]> countTotalReservationsByClient();
 }
