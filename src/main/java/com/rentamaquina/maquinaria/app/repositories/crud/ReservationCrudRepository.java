@@ -5,6 +5,7 @@
  */
 package com.rentamaquina.maquinaria.app.repositories.crud;
 import com.rentamaquina.maquinaria.app.entities.Reservation;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +18,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ReservationCrudRepository extends CrudRepository<Reservation, Integer>{
 
-    public List<Reservation> findAllByStartDateAfterAndStartDateBefore(Date dateOne, Date DateTwo);
+    public List<Reservation> findAllByStartDateAfterAndStartDateBefore(Calendar dateOne, Calendar DateTwo);
     
     public List<Reservation> findAllByStatus(String status);
     

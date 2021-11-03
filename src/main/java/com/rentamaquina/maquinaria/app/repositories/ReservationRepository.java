@@ -9,6 +9,7 @@ import com.rentamaquina.maquinaria.app.entities.Client;
 import com.rentamaquina.maquinaria.app.entities.Reservation;
 import com.rentamaquina.maquinaria.app.repositories.crud.ReservationCrudRepository;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Date;
 import java.util.Optional;
@@ -63,7 +64,11 @@ public class ReservationRepository {
     }
     
     public List<Reservation> ReservationTime(Date a, Date b) {
-        return reservationCrudRepository.findAllByStartDateAfterAndStartDateBefore(a, b);
+        Calendar cala = Calendar.getInstance();
+        cala.setTime(a);
+        Calendar calb = Calendar.getInstance();
+        calb.setTime(b);
+        return reservationCrudRepository.findAllByStartDateAfterAndStartDateBefore(cala, calb);
     }
     
     public List<CountClient> getTopClient() {

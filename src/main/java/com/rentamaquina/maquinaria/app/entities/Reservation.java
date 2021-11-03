@@ -8,6 +8,7 @@ package com.rentamaquina.maquinaria.app.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Calendar;
 //import java.util.Calendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -35,8 +36,8 @@ public class Reservation implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)  //genera automáticamente el ID
     private Integer idReservation;
-    private Date startDate;
-    private Date devolutionDate;
+    private Calendar startDate;
+    private Calendar devolutionDate;
     private String status="created";
     
     @ManyToOne
